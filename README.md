@@ -370,9 +370,46 @@ Este cuestionario está diseñado para evaluar conocimientos sólidos en Golang,
         fmt.Println("Tipo desconocido")
     }
     ```
-28. ¿Qué significa que las interfaces son satisfechas de forma implícita?  
-29. ¿Qué sucede si una interfaz contiene un método que un tipo no implementa?  
+28. ¿Qué significa que las interfaces son satisfechas de forma implícita?
+    - a. Un tipo satisface una interfaz si implementa todos los métodos de la interfaz, sin necesidad de una declaración explícita.
+    - b. Un tipo debe declarar explícitamente que implementa una interfaz usando la palabra clave `implements`.
+    - c. Las interfaces solo pueden ser satisfechas por tipos primitivos.
+    - d. No se pueden satisfacer interfaces de forma implícita en Go.
+
+    Answer: a
+    Explanation: En Go, las interfaces son satisfechas de forma implícita, lo que significa que un tipo satisface una interfaz si implementa todos los métodos definidos en esa interfaz, sin necesidad de declarar explícitamente que implementa la interfaz. Esto permite una mayor flexibilidad y facilita el diseño del código, ya que cualquier tipo que cumpla con el contrato de métodos puede ser utilizado donde se espera esa interfaz. Por ejemplo, si tienes una interfaz `Shape` con un método `Area()`, cualquier tipo que defina ese método automáticamente satisface la interfaz `Shape`.
+29. ¿Qué sucede si una interfaz contiene un método que un tipo no implementa?
+    - a. El tipo no satisface la interfaz y no puede ser usado donde se espera esa interfaz.
+    - b. El programa compila pero muestra una advertencia.
+    - c. El programa entra en pánico (*panic*) en tiempo de ejecución.
+    - d. El método faltante se ignora automáticamente.
+
+    Answer: a
+    Explanation: En Go, si una interfaz contiene un método que un tipo no implementa, entonces ese tipo no satisface la interfaz y no puede ser utilizado en contextos donde se espera esa interfaz. Esto es verificado en tiempo de compilación, lo que ayuda a garantizar que los tipos utilizados cumplen con los contratos definidos por las interfaces. Si intentas asignar un valor de un tipo que no satisface la interfaz a una variable de esa interfaz, el compilador generará un error.
 30. ¿Qué pasa si una interfaz contiene otra interfaz?
+    - a. La interfaz que contiene otra interfaz hereda todos los métodos de la interfaz contenida.
+    - b. No se pueden anidar interfaces en Go.
+    - c. La interfaz contenida se ignora automáticamente.
+    - d. La interfaz que contiene otra interfaz solo puede usar los métodos de la interfaz contenida.
+
+    Answer: a
+    Explanation: En Go, una interfaz puede contener otra interfaz, lo que significa que la interfaz que contiene hereda todos los métodos de la interfaz contenida. Esto permite crear interfaces más complejas y reutilizables al combinar múltiples interfaces en una sola. Por ejemplo:
+
+    ```go
+    type Reader interface {
+        Read(p []byte) (n int, err error)
+    }
+
+    type Writer interface {
+        Write(p []byte) (n int, err error)
+    }
+
+    type ReadWriter interface {
+        Reader
+        Writer
+    }
+    ```
+    En este ejemplo, `ReadWriter` hereda los métodos `Read` y `Write` de las interfaces `Reader` y `Writer`, respectivamente.
 
 ---
 
